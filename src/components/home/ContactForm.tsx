@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Send } from 'lucide-react';
+import SectionBackground from '../layout/SectionBackground';
 
-export default function ContactForm() {
+export default function ContactForm({ bgConfig }: { bgConfig?: any }) {
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setIsSubmitting(true);
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState)
+      });
+      setSubmitted(true);
+      setFormState({ name: '', email: '', phone: '', message: '' });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      console.error(err);
+      alert('Đã xảy ra lỗi khi gửi yêu cầu. Vui lòng thử lại sau.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section id="contact" className="py-24 md:py-32 bg-gray-50 relative overflow-hidden border-t border-gray-200">
+      <SectionBackground config={bgConfig} />
       {/* Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -100,10 +119,11 @@ export default function ContactForm() {
   
                 <button 
                   type="submit"
-                  className="w-full bg-accent text-white hover:bg-accent-light font-medium py-4 rounded-xl transition-colors flex items-center justify-center gap-2 group mt-4 shadow-md"
+                  disabled={isSubmitting}
+                  className="w-full bg-accent text-white hover:bg-accent-light font-medium py-4 rounded-xl transition-colors flex items-center justify-center gap-2 group mt-4 shadow-md disabled:opacity-70"
                 >
-                Gửi yêu cầu tư vấn
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                {isSubmitting ? 'Đang gửi...' : 'Gửi yêu cầu tư vấn'}
+                {!isSubmitting && <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
               </button>
             </form>
           )}

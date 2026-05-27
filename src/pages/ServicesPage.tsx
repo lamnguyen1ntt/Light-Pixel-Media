@@ -53,7 +53,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer data={data.footer} />
     </div>
   );
 }

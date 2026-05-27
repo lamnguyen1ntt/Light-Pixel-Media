@@ -3,30 +3,37 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import SectionBackground from '../layout/SectionBackground';
+
 interface HeroProps {
   data: {
     title: string;
     subtitle: string;
     videoUrl: string;
   };
+  bgConfig?: any;
 }
 
-export default function Hero({ data }: HeroProps) {
+export default function Hero({ data, bgConfig }: HeroProps) {
   return (
     <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden w-full">
       {/* Background Video/Overlay */}
-      <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="w-full h-full object-cover opacity-20"
-        >
-          <source src={data.videoUrl} type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white"></div>
-      </div>
+      {bgConfig ? (
+        <SectionBackground config={bgConfig} />
+      ) : (
+        <div className="absolute inset-0 z-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-full object-cover opacity-20"
+          >
+            <source src={data.videoUrl} type="video/mp4" />
+          </video>
+        </div>
+      )}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-white/90 via-white/80 to-white pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 text-center flex flex-col items-center">
         <motion.div
@@ -43,9 +50,8 @@ export default function Hero({ data }: HeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           className="text-5xl md:text-7xl font-display font-bold text-gray-900 tracking-tight leading-[1.1] mb-8 max-w-4xl"
-        >
-          {data.title}
-        </motion.h1>
+          dangerouslySetInnerHTML={{ __html: (data.title || '').replace(/(Light Pixel)/gi, '<br/>$1') }}
+        />
 
         <motion.p 
           initial={{ opacity: 0, y: 30 }}

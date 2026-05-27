@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Settings } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../../lib/utils';
 import { Link } from 'react-router-dom';
@@ -50,12 +50,21 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/#contact"
-              className="bg-accent hover:bg-accent-light text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all transform hover:scale-105 inline-block shadow-[0_0_15px_rgba(0,102,255,0.4)]"
-            >
-              Liên hệ ngay
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                to="/admin"
+                className="text-gray-400 hover:text-accent transition-colors p-2"
+                title="Quản trị viên"
+              >
+                <Settings size={20} />
+              </Link>
+              <Link
+                to="/#contact"
+                className="bg-accent hover:bg-accent-light text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all transform hover:scale-105 inline-block shadow-[0_0_15px_rgba(0,102,255,0.4)]"
+              >
+                Liên hệ ngay
+              </Link>
+            </div>
           </div>
 
           {/* Mobile Toggle */}
@@ -88,6 +97,14 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                to="/admin"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-2xl font-display font-medium text-gray-900 hover:text-accent transition-colors border-t border-gray-100 pt-6 mt-2 flex items-center justify-center gap-2"
+              >
+                <Settings size={24} />
+                Quản trị viên
+              </Link>
               <Link
                 to="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}

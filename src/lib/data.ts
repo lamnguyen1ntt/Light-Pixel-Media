@@ -105,5 +105,33 @@ export const defaultData = {
     { id: 4, name: "F&B Chain", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg" },
     { id: 5, name: "Health Care", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" }
   ],
-  about: "Chúng tôi là Light Pixel Media - Agency cung cấp giải pháp truyền thông sáng tạo, đột phá dành cho các doanh nghiệp, góp phần định vị vị thế vững chắc của bạn trên thị trường số."
+  about: "Chúng tôi là Light Pixel Media - Agency cung cấp giải pháp truyền thông sáng tạo, đột phá dành cho các doanh nghiệp, góp phần định vị vị thế vững chắc của bạn trên thị trường số.",
+  footer: {
+    description: "Creative Agency hàng đầu cung cấp giải pháp truyền thông, marketing và tổ chức sự kiện toàn diện cho doanh nghiệp.",
+    social: {
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com",
+      linkedin: "https://linkedin.com"
+    },
+    services: [
+      { label: "Marketing thuê ngoài", path: "/services" },
+      { label: "Truyền thông đa nền tảng", path: "/services" },
+      { label: "Media Production", path: "/services" },
+      { label: "Tổ chức sự kiện", path: "/services" }
+    ],
+    info: [
+      { label: "Về chúng tôi", path: "/about" },
+      { label: "Dự án tiêu biểu", path: "/portfolio" },
+      { label: "Quy trình làm việc", path: "/" },
+      { label: "Tuyển dụng", path: "/" }
+    ],
+    contact: {
+      address: "Tòa nhà Innovation, Phường ABC, Quận XYZ, TP. Hà Nội",
+      phone: "090 123 4567",
+      email: "hello@lightpixel.vn"
+    },
+    copyright: "© 2026 Light Pixel Media. All rights reserved.",
+    privacyUrl: "#",
+    termsUrl: "#"
+  }
 };

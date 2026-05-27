@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Settings, Image, FileText, Briefcase, Menu as MenuIcon, LogOut, Users, FolderOpen } from 'lucide-react';
+import { LayoutDashboard, Settings, Image, FileText, Briefcase, Menu as MenuIcon, LogOut, Users, FolderOpen, Inbox } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 // Import New Editors
 import ServicesEditor from './ServicesEditor';
 import PortfolioEditor from './PortfolioEditor';
 import ClientsEditor from './ClientsEditor';
+import SettingsEditor from './SettingsEditor';
+import TestimonialsEditor from './TestimonialsEditor';
+import CRMEditor from './CRMEditor';
+import FooterEditor from './FooterEditor';
 
 export default function AdminDashboard() {
   const [data, setData] = useState<any>(null);
@@ -33,7 +37,11 @@ export default function AdminDashboard() {
 
   const navItems = [
     { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+    { name: 'Khách hàng liên hệ (CRM)', path: '/admin/crm', icon: Inbox },
+    { name: 'Cài đặt nền', path: '/admin/settings', icon: Settings },
+    { name: 'Footer', path: '/admin/footer', icon: Settings },
     { name: 'Khách hàng', path: '/admin/clients', icon: Users },
+    { name: 'Nhận xét', path: '/admin/testimonials', icon: Users },
     { name: 'Hero Settings', path: '/admin/hero', icon: Image },
     { name: 'Dịch vụ', path: '/admin/services', icon: Briefcase },
     { name: 'Dự án (Portfolio)', path: '/admin/portfolio', icon: FolderOpen },
@@ -82,11 +90,15 @@ export default function AdminDashboard() {
       <main className="flex-1 ml-64 p-8">
         <Routes>
           <Route path="/" element={<DashboardHome data={data} />} />
+          <Route path="/settings" element={<SettingsEditor data={data} onSave={handleSave} />} />
           <Route path="/hero" element={<HeroEditor data={data} onSave={handleSave} />} />
           <Route path="/about" element={<AboutEditor data={data} onSave={handleSave} />} />
           <Route path="/services" element={<ServicesEditor data={data} onSave={handleSave} />} />
           <Route path="/portfolio" element={<PortfolioEditor data={data} onSave={handleSave} />} />
           <Route path="/clients" element={<ClientsEditor data={data} onSave={handleSave} />} />
+          <Route path="/testimonials" element={<TestimonialsEditor data={data} onSave={handleSave} />} />
+          <Route path="/crm" element={<CRMEditor data={data} />} />
+          <Route path="/footer" element={<FooterEditor data={data} onSave={handleSave} />} />
         </Routes>
       </main>
     </div>
@@ -118,6 +130,13 @@ function DashboardHome({ data }: { data: any }) {
           </div>
           <h3 className="text-gray-500 text-sm font-medium mb-1">Khách hàng / Đối tác</h3>
           <p className="text-3xl font-bold text-gray-900">{data.clients.length}</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:border-accent/30 transition-colors">
+          <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent mb-4">
+            <Inbox size={20} />
+          </div>
+          <h3 className="text-gray-500 text-sm font-medium mb-1">Yêu cầu liên hệ</h3>
+          <p className="text-3xl font-bold text-gray-900">{data.crmEntries ? data.crmEntries.length : 0}</p>
         </div>
       </div>
     </div>

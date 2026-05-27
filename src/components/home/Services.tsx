@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Briefcase, Share2, Video, Calendar, ShoppingCart, Globe, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SectionBackground from '../layout/SectionBackground';
 
 const icons: Record<string, React.ElementType> = {
   briefcase: Briefcase,
@@ -12,10 +13,11 @@ const icons: Record<string, React.ElementType> = {
   globe: Globe
 };
 
-export default function Services({ data }: { data: any[] }) {
+export default function Services({ data, bgConfig }: { data: any[], bgConfig?: any }) {
   return (
-    <section id="services" className="py-24 md:py-32 bg-gray-50 relative border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section id="services" className="relative py-24 md:py-32 bg-gray-50 border-t border-gray-200 overflow-hidden">
+      <SectionBackground config={bgConfig} />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

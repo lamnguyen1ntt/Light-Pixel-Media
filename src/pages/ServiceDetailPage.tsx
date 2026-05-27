@@ -151,6 +151,29 @@ export default function ServiceDetailPage() {
               </section>
             )}
 
+            {/* Rich Content from WordPress-like Editor */}
+            {service.richContent && (
+              <section className="pt-8 border-t border-gray-200">
+                <style dangerouslySetInnerHTML={{__html: `
+                  .rich-content h1 { font-size: 2.25rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #111827; }
+                  .rich-content h2 { font-size: 1.875rem; font-weight: 700; margin-top: 2rem; margin-bottom: 1rem; color: #111827; }
+                  .rich-content h3 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #111827; }
+                  .rich-content p { margin-bottom: 1rem; line-height: 1.75; color: #4B5563; }
+                  .rich-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #4B5563; }
+                  .rich-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1.5rem; color: #4B5563; }
+                  .rich-content li { margin-bottom: 0.5rem; }
+                  .rich-content a { color: #0066FF; text-decoration: underline; }
+                  .rich-content img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 1.5rem 0; }
+                  .rich-content blockquote { border-left: 4px solid #E5E7EB; padding-left: 1rem; margin-left: 0; font-style: italic; color: #6B7280; }
+                  .rich-content strong { font-weight: 700; color: #111827; }
+                `}} />
+                <div 
+                  className="rich-content"
+                  dangerouslySetInnerHTML={{ __html: service.richContent }} 
+                />
+              </section>
+            )}
+
           </div>
 
           <div className="lg:col-span-1">
@@ -188,7 +211,7 @@ export default function ServiceDetailPage() {
         </div>
       </div>
 
-      <Footer />
+      <Footer data={data.footer} />
     </div>
   );
 }

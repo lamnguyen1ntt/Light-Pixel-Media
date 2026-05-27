@@ -1,25 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SectionBackground from '../layout/SectionBackground';
 
-const testimonials = [
-  {
-    quote: "Toàn Cầu Media đã giúp chúng tôi tái định vị hoàn toàn thương hiệu trên nền tảng số. Đội ngũ chuyên nghiệp, sáng tạo và luôn bám sát mục tiêu kinh doanh.",
-    author: "Nguyễn Văn A",
-    role: "CEO, TechViet",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200"
-  },
-  {
-    quote: "Một agency hiếm hoi thực sự hiểu về SMEs. Các chiến dịch thực thi sắc bén, hình ảnh visual ấn tượng và quan trọng nhất là chi phí tối ưu so với hiệu quả mang lại.",
-    author: "Trần Thị B",
-    role: "Marketing Director, F&B Chain",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200"
-  }
-];
+export default function Testimonials({ data, bgConfig }: { data?: any[], bgConfig?: any }) {
+  if (!data || data.length === 0) return null;
 
-export default function Testimonials() {
   return (
-    <section className="py-24 md:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+      <SectionBackground config={bgConfig} />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -32,7 +21,7 @@ export default function Testimonials() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {testimonials.map((t, i) => (
+          {data.map((t, i) => (
             <motion.div 
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}

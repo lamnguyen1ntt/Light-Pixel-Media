@@ -32,15 +32,15 @@ export default function HomePage() {
   return (
     <div className="bg-white text-gray-900 selection:bg-accent selection:text-white font-sans">
       <Navbar />
-      <Hero data={data.hero} />
-      <Clients data={data.clients} />
-      <About data={data.about} />
-      <Services data={data.services} />
-      <Portfolio data={data.caseStudies} />
-      <Process />
-      <Testimonials />
-      <ContactForm />
-      <Footer />
+      <Hero data={data.hero} bgConfig={data.sectionBackgrounds?.hero} />
+      <Clients data={data.clients} bgConfig={data.sectionBackgrounds?.clients} />
+      <About data={data.about} bgConfig={data.sectionBackgrounds?.about} />
+      <Services data={data.services} bgConfig={data.sectionBackgrounds?.services} />
+      <Portfolio data={data.caseStudies} bgConfig={data.sectionBackgrounds?.portfolio} />
+      <Process bgConfig={data.sectionBackgrounds?.process} />
+      <Testimonials data={data.testimonials} bgConfig={data.sectionBackgrounds?.testimonials} />
+      <ContactForm bgConfig={data.sectionBackgrounds?.contact} />
+      <Footer data={data.footer} />
     </div>
   );
 }

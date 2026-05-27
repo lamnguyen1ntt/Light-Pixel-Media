@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SectionBackground from '../layout/SectionBackground';
 
 const steps = [
   { num: "01", title: "Nghiên cứu & Phân tích", desc: "Thấu hiểu thị trường, nội tại doanh nghiệp và đối thủ cạnh tranh." },
@@ -8,10 +9,11 @@ const steps = [
   { num: "04", title: "Đo lường & Tối ưu", desc: "Đánh giá hiệu quả liên tục để tối ưu chuyển đổi và chi phí." }
 ];
 
-export default function Process() {
+export default function Process({ bgConfig }: { bgConfig?: any }) {
   return (
-    <section id="process" className="py-24 md:py-32 bg-gray-50 border-t border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section id="process" className="relative py-24 md:py-32 bg-gray-50 border-t border-gray-200 overflow-hidden">
+      <SectionBackground config={bgConfig} />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div 
             initial={{ opacity: 0, x: -30 }}

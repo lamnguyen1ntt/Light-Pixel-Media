@@ -48,7 +48,50 @@ let siteData = {
     { id: 4, name: "F&B Chain", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg" },
     { id: 5, name: "Health Care", logoUrl: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" }
   ],
-  about: "Chúng tôi là Light Pixel Media - Agency cung cấp giải pháp truyền thông sáng tạo, đột phá dành cho các doanh nghiệp, góp phần định vị vị thế vững chắc của bạn trên thị trường số."
+  crmEntries: [],
+  testimonials: [
+    {
+      quote: "Toàn Cầu Media đã giúp chúng tôi tái định vị hoàn toàn thương hiệu trên nền tảng số. Đội ngũ chuyên nghiệp, sáng tạo và luôn bám sát mục tiêu kinh doanh.",
+      author: "Nguyễn Văn A",
+      role: "CEO, TechViet",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200"
+    },
+    {
+      quote: "Một agency hiếm hoi thực sự hiểu về SMEs. Các chiến dịch thực thi sắc bén, hình ảnh visual ấn tượng và quan trọng nhất là chi phí tối ưu so với hiệu quả mang lại.",
+      author: "Trần Thị B",
+      role: "Marketing Director, F&B Chain",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200"
+    }
+  ],
+  about: "Chúng tôi là Light Pixel Media - Agency cung cấp giải pháp truyền thông sáng tạo, đột phá dành cho các doanh nghiệp, góp phần định vị vị thế vững chắc của bạn trên thị trường số.",
+  footer: {
+    description: "Creative Agency hàng đầu cung cấp giải pháp truyền thông, marketing và tổ chức sự kiện toàn diện cho doanh nghiệp.",
+    social: {
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com",
+      linkedin: "https://linkedin.com"
+    },
+    services: [
+      { label: "Marketing thuê ngoài", path: "/services" },
+      { label: "Truyền thông đa nền tảng", path: "/services" },
+      { label: "Media Production", path: "/services" },
+      { label: "Tổ chức sự kiện", path: "/services" }
+    ],
+    info: [
+      { label: "Về chúng tôi", path: "/about" },
+      { label: "Dự án tiêu biểu", path: "/portfolio" },
+      { label: "Quy trình làm việc", path: "/" },
+      { label: "Tuyển dụng", path: "/" }
+    ],
+    contact: {
+      address: "Tòa nhà Innovation, Phường ABC, Quận XYZ, TP. Hà Nội",
+      phone: "090 123 4567",
+      email: "hello@lightpixel.vn"
+    },
+    copyright: "© 2026 Light Pixel Media. All rights reserved.",
+    privacyUrl: "#",
+    termsUrl: "#"
+  }
 };
 
 async function startServer() {
@@ -65,6 +108,19 @@ async function startServer() {
   app.post("/api/data", (req, res) => {
     siteData = { ...siteData, ...req.body };
     res.json({ success: true, data: siteData });
+  });
+
+  app.post("/api/contact", (req, res) => {
+    const entry = {
+      id: Date.now(),
+      createdAt: new Date().toISOString(),
+      ...req.body
+    };
+    if (!siteData.crmEntries) {
+      siteData.crmEntries = [];
+    }
+    siteData.crmEntries.unshift(entry); // Add to the beginning
+    res.json({ success: true, entry });
   });
 
   // Vite middleware for development

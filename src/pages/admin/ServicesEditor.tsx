@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Save } from 'lucide-react';
+import ReactQuill from 'react-quill-new';
+import 'react-quill-new/dist/quill.snow.css';
 
 export default function ServicesEditor({ data, onSave }: { data: any, onSave: (d: any) => void }) {
   const [services, setServices] = useState<any[]>(data.services || []);
@@ -12,6 +14,18 @@ export default function ServicesEditor({ data, onSave }: { data: any, onSave: (d
     const newServices = [...services];
     newServices[selectedIndex] = { ...newServices[selectedIndex], [field]: value };
     setServices(newServices);
+  };
+
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      ['link', 'image'],
+      ['clean'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'align': [] }]
+    ]
   };
 
   const handleAdd = () => {
@@ -136,6 +150,111 @@ export default function ServicesEditor({ data, onSave }: { data: any, onSave: (d
                   value={selectedService.diff || ''}
                   onChange={e => handleUpdate('diff', e.target.value)}
                 />
+              </div>
+              <div className="pt-4 border-t">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Bài viết chi tiết (Như WordPress)</label>
+                <div className="bg-white">
+                  <ReactQuill 
+                    theme="snow" 
+                    value={selectedService.richContent || ''} 
+                    onChange={(content: string) => handleUpdate('richContent', content)} 
+                    modules={quillModules}
+                    className="h-96 pb-12"
+                  />
+                </div>
+              </div>
+              <div className="pt-4 border-t mt-8">
+                <div className="flex items-center justify-between mb-4">
+                  <label className="block text-sm font-medium text-gray-700">Các Gói Dịch Vụ</label>
+                  <button 
+                    onClick={() => {
+                      const newPkgs = [...(selectedService.packages || [])];
+                      newPkgs.push({ name: 'Gói mới', subtitle: '', features: ['Tính năng 1'], benefit: '' });
+                      handleUpdate('packages', newPkgs);
+                    }}
+                    className="text-sm bg-accent text-white px-2 py-1 flex items-center gap-1 rounded"
+                  >
+                    <Plus size={14} /> Thêm gói
+                  </button>
+                </div>
+                
+                <div className="space-y-4">
+                  {(selectedService.packages || []).map((pkg: any, pIndex: number) => (
+                    <div key={pIndex} className="p-4 border border-gray-200 rounded bg-gray-50 relative">
+                      <button 
+                        onClick={() => {
+                          const newPkgs = (selectedService.packages || []).filter((_: any, i: number) => i !== pIndex);
+                          handleUpdate('packages', newPkgs);
+                        }}
+                        className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                      
+                      <div className="space-y-3 mt-2">
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Tên gói</label>
+                          <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white"
+                            value={pkg.name || ''}
+                            onChange={(e) => {
+                              const newPkgs = [...(selectedService.packages || [])];
+                              newPkgs[pIndex] = { ...newPkgs[pIndex], name: e.target.value };
+                              handleUpdate('packages', newPkgs);
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Mô tả ngắn (Subtitle)</label>
+                          <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white"
+                            value={pkg.subtitle || ''}
+                            onChange={(e) => {
+                              const newPkgs = [...(selectedService.packages || [])];
+                              newPkgs[pIndex] = { ...newPkgs[pIndex], subtitle: e.target.value };
+                              handleUpdate('packages', newPkgs);
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1 flex justify-between">
+                            <span>Các tính năng (mỗi dòng 1 tính năng)</span>
+                          </label>
+                          <textarea 
+                            rows={4}
+                            className="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white resize-none"
+                            value={(pkg.features || []).join('\n')}
+                            onChange={(e) => {
+                              const newPkgs = [...(selectedService.packages || [])];
+                              newPkgs[pIndex] = { ...newPkgs[pIndex], features: e.target.value.split('\n') };
+                              handleUpdate('packages', newPkgs);
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-medium text-gray-700 mb-1">Lợi ích (Benefit)</label>
+                          <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white"
+                            value={pkg.benefit || ''}
+                            onChange={(e) => {
+                              const newPkgs = [...(selectedService.packages || [])];
+                              newPkgs[pIndex] = { ...newPkgs[pIndex], benefit: e.target.value };
+                              handleUpdate('packages', newPkgs);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {(!selectedService.packages || selectedService.packages.length === 0) && (
+                    <div className="text-sm text-gray-500 italic p-4 text-center border border-dashed rounded">
+                      Chưa có gói dịch vụ nào
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

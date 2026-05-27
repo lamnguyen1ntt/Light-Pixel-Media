@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
+import PortfolioDetailPage from "./pages/PortfolioDetailPage";
 
 function ScrollHandler() {
   const { pathname, hash } = useLocation();
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/services/:id" element={<ServiceDetailPage />} />
         <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/portfolio/:id" element={<PortfolioDetailPage />} />
         <Route path="/admin/*" element={<AdminDashboard />} />
       </Routes>
     </>
