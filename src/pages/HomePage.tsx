@@ -37,7 +37,7 @@ export default function HomePage() {
       <About data={data.about} bgConfig={data.sectionBackgrounds?.about} />
       <Services data={data.services} bgConfig={data.sectionBackgrounds?.services} />
       <Portfolio data={data.caseStudies} bgConfig={data.sectionBackgrounds?.portfolio} />
-      <Process bgConfig={data.sectionBackgrounds?.process} />
+      <Process bgConfig={data.sectionBackgrounds?.process} data={data.process} />
       <Testimonials data={data.testimonials} bgConfig={data.sectionBackgrounds?.testimonials} />
       <ContactForm bgConfig={data.sectionBackgrounds?.contact} />
       <Footer data={data.footer} />

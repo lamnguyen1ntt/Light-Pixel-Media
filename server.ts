@@ -64,6 +64,39 @@ let siteData = {
     }
   ],
   about: "Chúng tôi là Light Pixel Media - Agency cung cấp giải pháp truyền thông sáng tạo, đột phá dành cho các doanh nghiệp, góp phần định vị vị thế vững chắc của bạn trên thị trường số.",
+  aboutTitlePlain: "Câu chuyện của",
+  aboutTitleAccent: "Light Pixel",
+  aboutVmv: {
+    title: "Định hướng & Giá trị thương hiệu",
+    subtitle: "TẦM NHÌN - SỨ MỆNH - GIÁ TRỊ CỐT LÕI",
+    visionTitle: "Tầm nhìn",
+    visionDesc: "Vươn mình trở thành biểu tượng dịch vụ truyền thông cao cấp hàng đầu, đồng hành nâng tầm giá trị cho mọi thương hiệu Việt vươn tầm thế giới.",
+    missionTitle: "Sứ mệnh",
+    missionDesc: "Cung cấp những giải pháp tiếp thị sáng tạo đổi mới, mang tính chiến lược chiều sâu và thúc đẩy hiệu quả kinh doanh vững bền.",
+    valuesTitle: "Giá trị cốt lõi",
+    valuesDesc: "Sáng tạo chuẩn premium, Cam kết hiệu quả đo lường được, và Đồng hành trung thực dựa trên triết lý win-win bền vững."
+  },
+  process: {
+    subtitle: "QUY TRÌNH LÀM VIỆC",
+    title: "Cách chúng tôi tạo ra sự khác biệt",
+    description: "Quy trình chuẩn hóa nhưng linh hoạt, đảm bảo mọi chiến dịch đều được thực thi với độ chính xác cao nhất và mang lại kết quả thực tế.",
+    steps: [
+      { num: "01", title: "Nghiên cứu & Phân tích", desc: "Thấu hiểu thị trường, nội tại doanh nghiệp và đối thủ cạnh tranh để xác định cơ hội phát triển cốt lõi." },
+      { num: "02", title: "Lên chiến lược", desc: "Thiết kế kế hoạch định hướng chi tiết, chọn lọc và phân bổ ngân sách vào các kênh truyền thông tối ưu." },
+      { num: "03", title: "Thực thi & Sáng tạo", desc: "Triển khai sản xuất nội dung, hình ảnh, video chất lượng premium đồng bộ với thông điệp thương hiệu." },
+      { num: "04", title: "Đo lường & Tối ưu", desc: "Theo dõi, đánh giá chỉ số hiệu quả liên tục để kịp thời tối ưu hóa tỷ lệ chuyển đổi và dòng tiền đầu tư." }
+    ]
+  },
+  aboutSections: [
+    {
+      id: 1,
+      title: "Triết lý thiết kế & Vận hành",
+      p1: "Tại Light Pixel Media, chúng tôi tin rằng truyền thông không chỉ là công cụ để đo lường chuyển đổi, mà còn là bản sắc để một thương hiệu có thể sống lâu dài trong tâm trí khách hàng.",
+      p2: "Chúng tôi luôn xây dựng nội dung có chiều sâu, kết hợp cùng hình ảnh thẩm mỹ theo phong cách premium corporate, giúp đối tác không chỉ gia tăng doanh số mà còn khẳng định vị thế dẫn đầu trong ngành.",
+      imageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200",
+      imagePosition: "right"
+    }
+  ],
   footer: {
     description: "Creative Agency hàng đầu cung cấp giải pháp truyền thông, marketing và tổ chức sự kiện toàn diện cho doanh nghiệp.",
     social: {
@@ -96,16 +129,31 @@ let siteData = {
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json());
 
   // API Routes
+  app.post("/api/login", (req, res) => {
+    const { username, password } = req.body;
+    const expectedUser = process.env.ADMIN_USER || "admin";
+    const expectedPass = process.env.ADMIN_PASSWORD || "lightpixel123";
+    if (username === expectedUser && password === expectedPass) {
+      res.json({ success: true, token: "secure-admin-token-123" });
+    } else {
+      res.status(401).json({ success: false, message: "Sai tài khoản hoặc mật khẩu!" });
+    }
+  });
+
   app.get("/api/data", (req, res) => {
     res.json(siteData);
   });
 
   app.post("/api/data", (req, res) => {
+    const authHeader = req.headers.authorization;
+    if (authHeader !== "Bearer secure-admin-token-123") {
+      return res.status(401).json({ success: false, message: "Không có quyền thực hiện hành động này!" });
+    }
     siteData = { ...siteData, ...req.body };
     res.json({ success: true, data: siteData });
   });
@@ -130,7 +178,7 @@ async function startServer() {
       appType: "spa",
     });
     app.use(vite.middlewares);
-  } else {
+  } else if (!process.env.VERCEL) {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
     app.get("*all", (req, res) => {
@@ -138,9 +186,18 @@ async function startServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
+  
+  return app;
 }
 
-startServer();
+const appPromise = startServer();
+export default async function (req: any, res: any) {
+  const app = await appPromise;
+  app(req, res);
+}
+

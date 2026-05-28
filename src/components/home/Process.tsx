@@ -2,14 +2,17 @@ import React from 'react';
 import { motion } from 'motion/react';
 import SectionBackground from '../layout/SectionBackground';
 
-const steps = [
-  { num: "01", title: "Nghiên cứu & Phân tích", desc: "Thấu hiểu thị trường, nội tại doanh nghiệp và đối thủ cạnh tranh." },
-  { num: "02", title: "Lên chiến lược", desc: "Thiết kế kế hoạch định hướng chi tiết, chọn lọc kênh truyền thông tối ưu." },
-  { num: "03", title: "Thực thi & Sáng tạo", desc: "Triển khai nội dung, hình ảnh, video với chất lượng premium." },
-  { num: "04", title: "Đo lường & Tối ưu", desc: "Đánh giá hiệu quả liên tục để tối ưu chuyển đổi và chi phí." }
-];
+export default function Process({ bgConfig, data }: { bgConfig?: any; data?: any }) {
+  const subtitle = data?.subtitle || "QUY TRÌNH LÀM VIỆC";
+  const title = data?.title || "Cách chúng tôi tạo ra sự khác biệt";
+  const description = data?.description || "Quy trình chuẩn hóa nhưng linh hoạt, đảm bảo mọi chiến dịch đều được thực thi với độ chính xác cao nhất và mang lại kết quả thực tế.";
+  const steps = data?.steps || [
+    { num: "01", title: "Nghiên cứu & Phân tích", desc: "Thấu hiểu thị trường, nội tại doanh nghiệp và đối thủ cạnh tranh." },
+    { num: "02", title: "Lên chiến lược", desc: "Thiết kế kế hoạch định hướng chi tiết, chọn lọc kênh truyền thông tối ưu." },
+    { num: "03", title: "Thực thi & Sáng tạo", desc: "Triển khai nội dung, hình ảnh, video với chất lượng premium." },
+    { num: "04", title: "Đo lường & Tối ưu", desc: "Đánh giá hiệu quả liên tục để tối ưu chuyển đổi và chi phí." }
+  ];
 
-export default function Process({ bgConfig }: { bgConfig?: any }) {
   return (
     <section id="process" className="relative py-24 md:py-32 bg-gray-50 border-t border-gray-200 overflow-hidden">
       <SectionBackground config={bgConfig} />
@@ -22,20 +25,20 @@ export default function Process({ bgConfig }: { bgConfig?: any }) {
             className="sticky top-32"
           >
             <h2 className="text-sm font-medium text-accent tracking-widest uppercase mb-4">
-              QUY TRÌNH LÀM VIỆC
+              {subtitle}
             </h2>
             <h3 className="text-3xl md:text-5xl font-display font-bold text-gray-900 leading-tight mb-8">
-              Cách chúng tôi tạo ra sự khác biệt
+              {title}
             </h3>
             <p className="text-gray-600 text-lg leading-relaxed font-light mb-8">
-              Quy trình chuẩn hóa nhưng linh hoạt, đảm bảo mọi chiến dịch đều được thực thi với độ chính xác cao nhất và mang lại kết quả thực tế.
+              {description}
             </p>
           </motion.div>
 
           <div className="space-y-12 relative">
             <div className="absolute left-6 top-10 bottom-10 w-[1px] bg-gray-200 hidden md:block"></div>
             
-            {steps.map((step, index) => (
+            {steps.map((step: any, index: number) => (
               <motion.div 
                 key={step.num}
                 initial={{ opacity: 0, y: 30 }}

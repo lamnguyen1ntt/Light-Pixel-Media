@@ -32,42 +32,112 @@ export default function AboutPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-20 max-w-4xl mx-auto"
         >
-          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 text-gray-900">
-            Câu chuyện của <span className="text-accent">Light Pixel</span>
+          <h1 className="text-5xl md:text-7xl font-display font-bold mb-6 text-gray-900 leading-tight">
+            {data.aboutTitlePlain || "Câu chuyện của"} <span className="text-accent">{data.aboutTitleAccent || "Light Pixel"}</span>
           </h1>
           <p className="text-xl text-gray-600 font-light leading-relaxed">
             {data.about}
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center mb-32">
+        {/* Vision - Mission - Core Values Section */}
+        {data.aboutVmv && (
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            className="mb-32 bg-slate-50 border border-slate-100 rounded-3xl p-8 md:p-12"
           >
-            <h2 className="text-3xl font-display font-bold mb-6 text-gray-900">Triết lý thiết kế & Vận hành</h2>
-            <p className="text-gray-600 mb-6 font-light leading-relaxed">
-              Tại Light Pixel Media, chúng tôi tin rằng truyền thông không chỉ là công cụ để đo lường chuyển đổi, mà còn là bản sắc để một thương hiệu có thể sống lâu dài trong tâm trí khách hàng. 
-            </p>
-            <p className="text-gray-600 font-light leading-relaxed">
-              Chúng tôi luôn xây dựng nội dung có chiều sâu, kết hợp cùng hình ảnh thẩm mỹ theo phong cách premium corporate, giúp đối tác không chỉ gia tăng doanh số mà còn khẳng định vị thế dẫn đầu trong ngành.
-            </p>
+            <div className="text-center mb-12">
+              <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-2">
+                {data.aboutVmv.subtitle || "TẦM NHÌN - SỨ MỆNH - GIÁ TRỊ CỐT LÕI"}
+              </h2>
+              <h3 className="text-3xl md:text-4xl font-display font-bold text-gray-900">
+                {data.aboutVmv.title || "Định hướng & Giá trị thương hiệu"}
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Vision (Tầm nhìn) */}
+              <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                <div className="w-12 h-12 rounded-xl bg-accent/5 flex items-center justify-center text-accent mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h4 className="text-xl font-display font-semibold text-gray-900 mb-3">
+                  {data.aboutVmv.visionTitle || "Tầm nhìn"}
+                </h4>
+                <p className="text-gray-600 font-light text-sm leading-relaxed whitespace-pre-line">
+                  {data.aboutVmv.visionDesc}
+                </p>
+              </div>
+
+              {/* Mission (Sứ mệnh) */}
+              <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                <div className="w-12 h-12 rounded-xl bg-accent/5 flex items-center justify-center text-accent mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-target"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                </div>
+                <h4 className="text-xl font-display font-semibold text-gray-900 mb-3">
+                  {data.aboutVmv.missionTitle || "Sứ mệnh"}
+                </h4>
+                <p className="text-gray-600 font-light text-sm leading-relaxed whitespace-pre-line">
+                  {data.aboutVmv.missionDesc}
+                </p>
+              </div>
+
+              {/* Core Values (Giá trị cốt lõi) */}
+              <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                <div className="w-12 h-12 rounded-xl bg-accent/5 flex items-center justify-center text-accent mb-6">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shield"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h4 className="text-xl font-display font-semibold text-gray-900 mb-3">
+                  {data.aboutVmv.valuesTitle || "Giá trị cốt lõi"}
+                </h4>
+                <p className="text-gray-600 font-light text-sm leading-relaxed whitespace-pre-line">
+                  {data.aboutVmv.valuesDesc}
+                </p>
+              </div>
+            </div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="aspect-square bg-gray-50 rounded-3xl overflow-hidden"
-          >
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200" alt="Team working" className="w-full h-full object-cover opacity-90" />
-          </motion.div>
+        )}
+
+        <div className="space-y-32 mb-32">
+          {(data.aboutSections || []).map((section: any, index: number) => {
+            const isLeft = section.imagePosition === 'left';
+            return (
+              <div key={section.id || index} className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <motion.div
+                  initial={{ opacity: 0, x: isLeft ? 30 : -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className={isLeft ? 'md:order-2' : 'md:order-1'}
+                >
+                  <h2 className="text-3xl font-display font-bold mb-6 text-gray-900">{section.title}</h2>
+                  <p className="text-gray-600 mb-6 font-light leading-relaxed whitespace-pre-line">
+                    {section.p1}
+                  </p>
+                  {section.p2 && (
+                    <p className="text-gray-600 font-light leading-relaxed whitespace-pre-line">
+                      {section.p2}
+                    </p>
+                  )}
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: isLeft ? -30 : 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className={`aspect-square bg-gray-50 rounded-3xl overflow-hidden ${isLeft ? 'md:order-1' : 'md:order-2'}`}
+                >
+                  <img src={section.imageUrl || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200"} alt={section.title} className="w-full h-full object-cover opacity-90" />
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </div>
       
-      <Process />
+      <Process data={data.process} />
       
       <div className="py-24 bg-gray-50 border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
